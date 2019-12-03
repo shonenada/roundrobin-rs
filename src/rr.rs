@@ -1,17 +1,11 @@
 #[derive(Debug)]
 pub struct Server {
-    weight: i32,
-    cur_weight: i32,
     url: String,
 }
 
 impl Server {
     pub fn new(url: String) -> Server {
-        return Server{
-            weight: 0,
-            cur_weight: -1,
-            url: url,
-        }
+        return Server { url };
     }
 }
 
@@ -22,16 +16,20 @@ pub struct RoundRobinBalancer {
 }
 
 impl RoundRobinBalancer {
-
     pub fn new() -> RoundRobinBalancer {
-        return RoundRobinBalancer{
+        return RoundRobinBalancer {
             servers: vec![],
             cur_idx: 0,
-        }
+        };
     }
 
-    pub fn insert(&mut self, server: Server) {
+    pub fn insert_server(&mut self, server: Server) {
         self.servers.push(server);
+    }
+
+    pub fn insert_url(&mut self, url: String) {
+        let server = Server::new(url);
+        self.insert_server(server);
     }
 
     pub fn next(&mut self) -> Option<&Server> {
@@ -39,21 +37,19 @@ impl RoundRobinBalancer {
         self.cur_idx = (self.cur_idx + 1) % self.servers.len();
         s.clone()
     }
-
 }
 
 mod tests {
-    use super::{Server, RoundRobinBalancer};
+    use super::{RoundRobinBalancer, Server};
     #[test]
-    fn test_next() {
+    fn test_simple_next() {
         let url01 = "http://localhost:8081".to_string();
         let url02 = "http://localhost:8082".to_string();
         let server01 = Server::new(url01.clone());
-        let server02 = Server::new(url02.clone());
 
         let mut rr = RoundRobinBalancer::new();
-        rr.insert(server01);
-        rr.insert(server02);
+        rr.insert_server(server01);
+        rr.insert_url(url02.clone());
 
         let r1 = rr.next().unwrap();
         assert!(r1.url == url01.clone());
