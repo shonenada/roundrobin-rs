@@ -1,5 +1,7 @@
 # Roundrobin
 
+[![Build Status](https://travis-ci.com/shonenada/roundrobin-rs.svg?branch=master)](https://travis-ci.com/shonenada/roundrobin-rs)
+
 A weighted roundrobin implementation.
 
 ## Quick Start

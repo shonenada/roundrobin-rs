@@ -1,10 +1,17 @@
 [package]
 name = "roundrobin"
 version = "0.1.0"
-authors = ["shonenada <shonenada@gmail.com>"]
+authors = ["Yaoda Liu <shonenada@gmail.com>"]
+license = "MIT"
+description = "A simple roundrobin implementation."
+repository = "https://github.com/shonenada/roundrobin-rs"
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+categories = ["web-programming"]
+keywords = ["roundrobin"]
+include = ["src/**/*", "Cargo.toml", "docs/**/*", "LICENSE", "README.md"]
 
 [dependencies]
 log = "0.4"
+
+[badges]
+travis-ci = { repository = "shonenada/roundrobin-rs", branch="master" }
