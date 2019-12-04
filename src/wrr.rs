@@ -103,11 +103,14 @@ impl WeightedRoundRobinBalancer {
             if each.get_url() == url {
                 let diff = cmp::max(each.weight / 3, 1);
                 each.effect_weight -= diff;
-                if each.effect_weight < 0  {
+                if each.effect_weight < 0 {
                     each.effect_weight = 0
                 }
 
-                debug!("Failed server: {}, effect_weight: {}, diff: {}", url, each.effect_weight, diff);
+                debug!(
+                    "Failed server: {}, effect_weight: {}, diff: {}",
+                    url, each.effect_weight, diff
+                );
             }
         }
     }
