@@ -1,4 +1,4 @@
-use roundrobin::wrr::{Server, WeightedRoundRobinBalancer};
+use roundrobin::wrr::{Server, WeightedRoundRobinBalancer, Balancer};
 
 fn main() {
     let url01 = "http://localhost:8081".to_string();

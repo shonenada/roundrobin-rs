@@ -8,6 +8,11 @@ pub struct Server {
     url: String,
 }
 
+pub trait Balancer {
+    fn next(&mut self) -> Option<&Server>;
+    fn fail(&mut self, url: &String);
+}
+
 impl Server {
     pub fn new(url: String, weight: i32) -> Server {
         return Server {
@@ -72,8 +77,11 @@ impl WeightedRoundRobinBalancer {
         let server = Server::new(url, weight);
         self.insert_server(server);
     }
+}
 
-    pub fn next(&mut self) -> Option<&Server> {
+impl Balancer for WeightedRoundRobinBalancer {
+
+    fn next(&mut self) -> Option<&Server> {
         let mut best_idx = 0;
         let mut best_weight = 0;
         let mut total = 0;
@@ -98,7 +106,7 @@ impl WeightedRoundRobinBalancer {
         }
     }
 
-    pub fn fail(&mut self, url: &String) {
+    fn fail(&mut self, url: &String) {
         for mut each in self.get_servers_mut() {
             if each.get_url() == url {
                 let diff = cmp::max(each.weight / 3, 1);

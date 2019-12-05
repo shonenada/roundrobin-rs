@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate log;
 use rand::Rng;
-use roundrobin::wrr::{Server, WeightedRoundRobinBalancer};
+use roundrobin::wrr::{Server, WeightedRoundRobinBalancer, Balancer};
 
 fn chaos_server(rr: &mut WeightedRoundRobinBalancer, url: &String) {
     if rand::random() {
