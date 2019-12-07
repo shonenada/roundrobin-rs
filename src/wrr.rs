@@ -80,7 +80,6 @@ impl WeightedRoundRobinBalancer {
 }
 
 impl Balancer for WeightedRoundRobinBalancer {
-
     fn next(&mut self) -> Option<&Server> {
         let mut best_idx = 0;
         let mut best_weight = 0;
