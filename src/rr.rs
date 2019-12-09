@@ -1,3 +1,5 @@
+use std::sync::{Arc, RwLock};
+
 #[derive(Debug)]
 pub struct Server {
     url: String,
@@ -12,14 +14,14 @@ impl Server {
 #[derive(Debug)]
 pub struct RoundRobinBalancer {
     pub servers: Vec<Server>,
-    cur_idx: usize,
+    cur_idx: Arc<RwLock<usize>>,
 }
 
 impl RoundRobinBalancer {
     pub fn new() -> RoundRobinBalancer {
         return RoundRobinBalancer {
             servers: vec![],
-            cur_idx: 0,
+            cur_idx: Arc::new(RwLock::new(0)),
         };
     }
 
@@ -32,9 +34,10 @@ impl RoundRobinBalancer {
         self.insert_server(server);
     }
 
-    pub fn next(&mut self) -> Option<&Server> {
-        let s = self.servers.get(self.cur_idx);
-        self.cur_idx = (self.cur_idx + 1) % self.servers.len();
+    pub fn next(&self) -> Option<&Server> {
+        let mut ci = self.cur_idx.write().unwrap();
+        let s = self.servers.get(*ci);
+        *ci = (*ci + 1)  % self.servers.len();
         s.clone()
     }
 }
