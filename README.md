@@ -14,7 +14,7 @@ Add the following dependency to your Cargo.toml:
 
 ```
 [dependencies]
-roundrobin = "0.1.0"
+roundrobin = "0.1.1"
 ```
 
 ## Example
