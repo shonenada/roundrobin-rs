@@ -165,7 +165,7 @@ mod tests {
 
         wrr.fail(&url);
         let s1 = wrr.search_server_by_url(&url).unwrap(); // effect_weight = 1
-        assert_eq!(*(s1.effect_weight.read().unwrap()),  1);
+        assert_eq!(*(s1.effect_weight.read().unwrap()), 1);
 
         wrr.fail(&url);
         let _s2 = wrr.search_server_by_url(&url).unwrap(); // effect_weight = 0

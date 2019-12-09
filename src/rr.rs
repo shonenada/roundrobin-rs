@@ -37,7 +37,7 @@ impl RoundRobinBalancer {
     pub fn next(&self) -> Option<&Server> {
         let mut ci = self.cur_idx.write().unwrap();
         let s = self.servers.get(*ci);
-        *ci = (*ci + 1)  % self.servers.len();
+        *ci = (*ci + 1) % self.servers.len();
         s.clone()
     }
 }
